@@ -1,0 +1,311 @@
+/* 
+  CSS for the card site 
+  #23325a - dark blue
+  #e7a572 - dark yellow
+  #f7e6d3 - light yellow
+  #782b42 - dark red
+*/
+
+@font-face {
+  font-family: 'Nunito';
+  src: url(assets/fonts/Nunito/Nunito-VariableFont_wght.ttf) format('truetype');
+  font-optical-sizing: auto;
+  font-weight: 200 800;
+  font-style: normal;
+}
+
+body {
+  background-color: #f7e6d3;
+  overflow: hidden;
+}
+
+#nav {
+  margin: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  padding: 0px;
+  width: 30px;
+  height: 30px;
+  background-image: url(assets/error_image.png);
+  background-size: cover;
+  border-radius: 20px;
+}
+
+.dropdown {
+  width: 90px;
+  height: 30px;
+  background-color: #23325a;
+  color: #f7e6d3;
+  border-radius: 4px;
+  position: relative;
+  margin: 0px 10px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.for-checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dropdown p {
+  font-family: Nunito;
+  font-weight: 600;
+  text-decoration: none;
+  color: #f7e6d3;
+  margin: -2px -3px ;
+  padding: 6px;
+  transition: color 0.3s ease-in-out;
+}
+
+.dropdown svg {
+  fill: #f7e6d3;
+  padding: 0px;
+  width: 20px;
+  height: 20px;
+  transition: width 0.5s ease-in-out, height 0.5s ease-in-out, transform 0.5s ease-in-out, fill 0.3s ease-in-out;
+}
+
+.checkbox:not(:checked) ~ .for-checkbox p {
+  color: #f7e6d3;
+}
+
+.checkbox:checked ~ .for-checkbox p {
+  color: #23325a;
+}
+
+.checkbox:not(:checked) ~  {
+  background-color: #23325a; /* dark blue */
+}
+
+.checkbox:checked ~ .dropdown {
+  background-color: #e7a572; /* dark yellow */
+}
+
+.checkbox:not(:checked) ~ .for-checkbox svg {
+  transform: rotate(0deg);
+  fill: #f7e6d3;
+}
+
+.checkbox:checked ~ .for-checkbox svg {
+  transform: rotate(-180deg);
+  fill: #23325a;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+@keyframes flip {
+  0% {
+    transform: scale(1.50) translate(0, 200px) rotateY(0deg);
+  }
+  50% {
+    transform: scale(1.50) translate(0, 200px) rotateY(180deg);
+  }
+  100% {
+    transform: scale(1.50) translate(0, 200px) rotateY(180deg);
+  }
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: 120%;
+  left: 10px;
+  background-color: #23325a; 
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  border-radius: 4px; 
+  animation: slideUp 0.3s ease-in-out; 
+}
+
+.checkbox:not(:checked) ~ .dropdown-content {
+  display: block;
+  animation: slideDown 0.3s ease-in-out forwards;
+  animation-fill-mode: forwards;
+  pointer-events: none; 
+}
+
+.checkbox:checked ~ .dropdown-content {
+  display: block;
+  animation: slideUp 0.3s ease-in-out forwards;
+  pointer-events: auto; 
+}
+
+.checkbox:not(:checked) ~ .dropdown-content.slideDown {
+  display: none;
+}
+
+.dropdown-content a {
+  color: #f7e6d3; 
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  font-family: Nunito;
+  font-weight: 600;
+  border-radius: 4px; 
+}
+
+.dropdown-content a:hover {
+  background-color: #e7a572;
+  color: #23325a; 
+}
+
+[type="checkbox"]:checked,
+[type="checkbox"]:not(:checked){
+  position: absolute;
+  left: -99999px;
+}
+.cards {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 400px;
+  width: 240px;
+  pointer-events: auto;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Stacked State */
+.card {
+  position: absolute;
+  width: 230px;
+  height: 410px;
+  background: #23325a;
+  border: 2px solid #e7a572;
+  border-radius: 10px;
+  cursor: pointer;
+  transform-origin: bottom center;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: auto;
+}
+
+/* Stacked positioning with hover effect */
+.card {
+  transform: translateY(var(--stack-offset, 0));
+  z-index: var(--stack-zindex, 1);
+}
+
+.card:nth-child(1) { --stack-offset: 0; --stack-zindex: 5; }
+.card:nth-child(2) { --stack-offset: 4px; --stack-zindex: 4; }
+.card:nth-child(3) { --stack-offset: 8px; --stack-zindex: 3; }
+.card:nth-child(4) { --stack-offset: 12px; --stack-zindex: 2; }
+.card:nth-child(5) { --stack-offset: 16px; --stack-zindex: 1; }
+
+/* Spread State */
+.cards.spread {
+  bottom: 300px;
+  transform: translateX(-50%);
+}
+
+/* Spread Positions */
+.cards.spread .card:nth-child(1) { 
+  transform: rotate(-30deg) translate(-440px, 180px);
+  --hover-rotate: -10deg;
+  --hover-translate-x: -300px;
+}
+.cards.spread .card:nth-child(2) { 
+  transform: rotate(-15deg) translate(-225px, 240px);
+  --hover-rotate: -5deg;
+  --hover-translate-x: -125px;
+}
+.cards.spread .card:nth-child(3) { 
+  transform: rotate(0deg) translate(0, 250px);
+  --hover-rotate: 0deg;
+  --hover-translate-x: 0;
+}
+.cards.spread .card:nth-child(4) { 
+  transform: rotate(15deg) translate(225px, 240px);
+  --hover-rotate: 5deg;
+  --hover-translate-x: 125px;
+}
+.cards.spread .card:nth-child(5) { 
+  transform: rotate(30deg) translate(440px, 180px);
+  --hover-rotate: 10deg;
+  --hover-translate-x: 200px;
+}
+
+/* 
+  edit the spread so that its much more hover receptive 
+  also the cards dont go back to the stack when a card is active
+*/
+
+/* Hover Effect */
+.cards.spread .card:hover:not(.active) {
+  transform: 
+    rotate(var(--hover-rotate)) 
+    translate(var(--hover-translate-x), 250px) 
+    scale(1.5) !important;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 11;
+}
+/* Active Card State */
+.card.active {
+  transform: translate(-400px, 250px) scale(1.5) rotateY(180deg) !important;
+  z-index: 10;
+}
+
+.card.active .close-btn {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Lowered State */
+.card.lowered {
+  transform: translateY(200px) scale(0.8);
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* Close Button */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: #e7a572;
+  color: #23325a;
+  font-family: Nunito;
+  font-weight: 600;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 2;
+}
+
+.card.clicked .close-btn {
+  opacity: 1; /* Show when card is clicked */
+  pointer-events: auto; /* Enable pointer events when visible */
+}
+

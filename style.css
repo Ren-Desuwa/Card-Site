@@ -1,0 +1,217 @@
+/* 
+  CSS for the card site 
+  #23325a - dark blue
+  #e7a572 - dark yellow
+  #f7e6d3 - light yellow
+  #782b42 - dark red
+*/
+
+@font-face {
+  font-family: 'Nunito';
+  src: url(assets/fonts/Nunito/Nunito-VariableFont_wght.ttf) format('truetype');
+  font-optical-sizing: auto;
+  font-weight: 200 800;
+  font-style: normal;
+}
+
+body {
+  background-color: #f7e6d3;
+  overflow: hidden;
+}
+
+#nav {
+  margin: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  padding: 0px;
+  width: 30px;
+  height: 30px;
+  background-image: url(assets/error_image.png);
+  background-size: cover;
+  border-radius: 20px;
+}
+
+.dropdown {
+  width: 90px;
+  height: 30px;
+  background-color: #23325a;
+  color: #f7e6d3;
+  border-radius: 4px;
+  position: relative;
+  margin: 0px 10px;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.for-checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dropdown p {
+  font-family: Nunito;
+  font-weight: 600;
+  text-decoration: none;
+  color: #f7e6d3;
+  margin: -2px -3px ;
+  padding: 6px;
+  transition: color 0.3s ease-in-out;
+}
+
+.dropdown svg {
+  fill: #f7e6d3;
+  padding: 0px;
+  width: 20px;
+  height: 20px;
+  transition: width 0.3s ease-in-out, height 0.3s ease-in-out, transform 0.3s ease-in-out, fill 0.3s ease-in-out;
+}
+
+.checkbox:not(:checked) ~ .for-checkbox p {
+  color: #f7e6d3;
+}
+
+.checkbox:checked ~ .for-checkbox p {
+  color: #23325a;
+}
+
+.checkbox:not(:checked) ~  {
+  background-color: #23325a; /* dark blue */
+}
+
+.checkbox:checked ~ .dropdown {
+  background-color: #e7a572; /* dark yellow */
+}
+
+.checkbox:not(:checked) ~ .for-checkbox svg {
+  transform: rotate(0deg);
+  fill: #f7e6d3;
+}
+
+.checkbox:checked ~ .for-checkbox svg {
+  transform: rotate(-180deg);
+  fill: #23325a;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+@keyframes flip {
+  0% {
+    transform: scale(1.50) translate(0, 200px) rotateY(0deg);
+  }
+  50% {
+    transform: scale(1.50) translate(0, 200px) rotateY(180deg);
+  }
+  100% {
+    transform: scale(1.50) translate(0, 200px) rotateY(180deg);
+  }
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  top: 120%;
+  left: 10px;
+  background-color: #23325a; 
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  border-radius: 4px; 
+  animation: slideUp 0.3s ease-in-out; 
+}
+
+.checkbox:not(:checked) ~ .dropdown-content {
+  display: block;
+  animation: slideDown 0.3s ease-in-out forwards;
+  animation-fill-mode: forwards;
+  pointer-events: none; 
+}
+
+.checkbox:checked ~ .dropdown-content {
+  display: block;
+  animation: slideUp 0.3s ease-in-out forwards;
+  pointer-events: auto; 
+}
+
+.checkbox:not(:checked) ~ .dropdown-content.slideDown {
+  display: none;
+}
+
+.dropdown-content a {
+  color: #f7e6d3; 
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  font-family: Nunito;
+  font-weight: 600;
+  border-radius: 4px; 
+}
+
+.dropdown-content a:hover {
+  background-color: #e7a572;
+  color: #23325a; 
+}
+
+[type="checkbox"]:checked,
+[type="checkbox"]:not(:checked){
+  position: absolute;
+  left: -99999px;
+}
+
+.card.stack {
+  position: absolute;
+  width: 230px;
+  height: 410px;
+  background: #23325a;
+  border: 2px solid #e7a572;
+  border-radius: 10px;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.cards {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 400px;
+  width: 240px;
+  pointer-events: auto;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Stacked State */
+.card {
+  position: absolute;
+  width: 230px;
+  height: 410px;
+  background: #23325a;
+  border: 2px solid #e7a572;
+  border-radius: 10px;
+  cursor: pointer;
+  transform-origin: bottom center;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: auto;
+}
